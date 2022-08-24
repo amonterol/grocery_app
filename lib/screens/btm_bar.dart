@@ -17,7 +17,17 @@ class BottomBarScreen extends StatefulWidget {
 
 class _BottomBarScreenState extends State<BottomBarScreen> {
   int _selectedIndex = 0;
+/*
+   //Solo se puede mostrar la misma AppBar en cada screen
+   final List _pages = [
+     const HomeScreen(), 
+    const CategoriesScreen(), 
+     const CartScreen(), 
+     const UserScreen(), 
+     ];
 
+*/
+  //Para poder mostrar diferenes AppBar en cada screen
   final List<Map<String, dynamic>> _pages = [
     {'page': const HomeScreen(), 'title': 'Home Screen'},
     {'page': const CategoriesScreen(), 'title': 'Categories Screen'},
@@ -37,8 +47,13 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     bool isDark = themeState.getDarkTheme;
     return Scaffold(
       // appBar: AppBar(
-      //   title: Text( _pages[_selectedIndex]['title']),
+      //   title: Text( 'Text'),
       // ),
+      //body: _pages[_selectedIndex],
+
+      appBar: AppBar(
+        title: Text(_pages[_selectedIndex]['title']),
+      ),
       body: _pages[_selectedIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: isDark ? Theme.of(context).cardColor : Colors.white,
