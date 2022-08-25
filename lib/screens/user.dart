@@ -1,10 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/providers/dark_theme_provider.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
-
-import '../provider/dark_theme_provider.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({Key? key}) : super(key: key);
@@ -59,7 +58,7 @@ class _UserScreenState extends State<UserScreen> {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            print('My name is pressed');
+                            //print('My name is pressed');
                           }),
                   ],
                 ),
