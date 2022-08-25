@@ -145,6 +145,9 @@ class _CartWidgetState extends State<CartWidget> {
                         ],
                       ),
                     ),
+                    const SizedBox(
+                      width: 5,
+                    ),
                   ],
                 ),
               ),
@@ -177,6 +180,7 @@ class _CartWidgetState extends State<CartWidget> {
               child: Icon(
                 icon,
                 color: Colors.white,
+                size: 20,
               ),
             ),
           ),
