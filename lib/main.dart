@@ -4,8 +4,8 @@ import 'package:grocery_app/inner_screens/product_details.dart';
 import 'package:grocery_app/providers/dark_theme_provider.dart';
 import 'package:grocery_app/screens/btm_bar.dart';
 import 'package:grocery_app/screens/orders/orders_screen.dart';
+import 'package:grocery_app/screens/viewed_recently/viewed_recently.dart';
 import 'package:grocery_app/screens/wishlist/wishlist_screen.dart';
-
 import 'package:provider/provider.dart';
 
 void main() {
@@ -54,6 +54,8 @@ class _MyAppState extends State<MyApp> {
             ProductDetails.routeName: (context) => const ProductDetails(),
             WishlistScreen.routeName: (ctx) => const WishlistScreen(),
             OrdersScreen.routeName: (ctx) => const OrdersScreen(),
+            ViewedRecentlyScreen.routeName: (ctx) =>
+                const ViewedRecentlyScreen(),
           },
         );
       }),
