@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
+//import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/services/global_methods.dart';
 import 'package:grocery_app/services/utils.dart';
 import 'package:grocery_app/widgets/back_widget.dart';
 //import 'package:grocery_app/screens/cart/cart_widget.dart';
@@ -31,10 +33,20 @@ class WishlistScreen extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  IconlyBroken.delete,
-                  color: color,
+                onPressed: () {
+                  GlobalMethods.warningDialog(
+                      title: 'Empty your wishlist',
+                      subtitle: 'Are you sure?',
+                      fct: () {},
+                      context: context);
+                },
+                icon: const Icon(
+                  //IconlyBroken.delete,
+                  //color: color,
+                  CupertinoIcons
+                      .delete_simple, //CupertinoIcons.cart_badge_minus
+                  color: Colors.red,
+                  size: 24,
                 ),
               ),
             ]),
