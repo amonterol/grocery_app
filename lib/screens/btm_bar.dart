@@ -15,7 +15,7 @@ class BottomBarScreen extends StatefulWidget {
 }
 
 class _BottomBarScreenState extends State<BottomBarScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 3;
 /*
    //Solo se puede mostrar la misma AppBar en cada screen
    final List _pages = [
@@ -31,7 +31,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     {'page': const HomeScreen(), 'title': 'Home Screen'},
     {'page': const CategoriesScreen(), 'title': 'Categories Screen'},
     {'page': const CartScreen(), 'title': 'Cart Screen'},
-    {'page': const UserScreen(), 'title': 'user Screen'},
+    {'page': const UserScreen(), 'title': 'User Screen'},
   ];
 
   void _selectedPage(int index) {

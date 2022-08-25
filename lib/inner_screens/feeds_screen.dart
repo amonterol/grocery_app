@@ -1,8 +1,8 @@
-/*
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
+//import 'package:flutter_iconly/flutter_iconly.dart';
 
 import '../services/utils.dart';
+import '../widgets/back_widget.dart';
 import '../widgets/feed_items.dart';
 import '../widgets/text_widget.dart';
 
@@ -15,11 +15,12 @@ class FeedsScreen extends StatefulWidget {
 }
 
 class _FeedsScreenState extends State<FeedsScreen> {
-  final TextEditingController _searchTextController = TextEditingController();
+  // ignore: unnecessary_nullable_for_final_variable_declarations
+  final TextEditingController? _searchTextController = TextEditingController();
   final FocusNode _searchTextFocusNode = FocusNode();
   @override
   void dispose() {
-    _searchTextController.dispose();
+    _searchTextController!.dispose();
     _searchTextFocusNode.dispose();
     super.dispose();
   }
@@ -30,16 +31,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
     Size size = Utils(context).getScreenSize;
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            IconlyLight.arrowLeft2,
-            color: color,
-          ),
-        ),
+        leading: const BackWidget(),
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         centerTitle: true,
@@ -77,7 +69,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   prefixIcon: const Icon(Icons.search),
                   suffix: IconButton(
                     onPressed: () {
-                      _searchTextController.clear();
+                      _searchTextController!.clear();
                       _searchTextFocusNode.unfocus();
                     },
                     icon: Icon(
@@ -105,4 +97,3 @@ class _FeedsScreenState extends State<FeedsScreen> {
     );
   }
 }
-*/
