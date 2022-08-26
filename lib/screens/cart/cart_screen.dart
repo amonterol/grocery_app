@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery_app/screens/cart/cart_widget.dart';
 import 'package:grocery_app/services/global_methods.dart';
 import 'package:grocery_app/services/utils.dart';
+import 'package:grocery_app/widgets/empty_screen.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 
 class CartScreen extends StatelessWidget {
@@ -13,48 +14,60 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     //Size size = Utils(context).getScreenSize;
-    return Scaffold(
-      appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          title: TextWidget(
-            text: 'Cart (10)',
-            color: color,
-            isTitle: true,
-            textSize: 22,
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                GlobalMethods.warningDialog(
-                    title: 'Empty your cart',
-                    subtitle: 'Are you sure?',
-                    fct: () {},
-                    context: context);
-              },
-              icon: const Icon(
-                //IconlyBroken.delete,
-                //color: color,
-                CupertinoIcons.delete_simple, //CupertinoIcons.cart_badge_minus
-                color: Colors.red,
-                size: 24,
-              ),
+    // ignore: no_leading_underscores_for_local_identifiers
+    bool _isEmpty = true;
+
+    return _isEmpty
+        ? const EmptyScreen(
+            title: 'Your cart is empty',
+            subtitle: 'Add something and make me happy :)',
+            buttonText: 'Shop now',
+            imagePath: 'assets/images/cart.png',
+          )
+        // ignore: dead_code
+        : Scaffold(
+            appBar: AppBar(
+                elevation: 0,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                title: TextWidget(
+                  text: 'Cart (10)',
+                  color: color,
+                  isTitle: true,
+                  textSize: 22,
+                ),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      GlobalMethods.warningDialog(
+                          title: 'Empty your cart',
+                          subtitle: 'Are you sure?',
+                          fct: () {},
+                          context: context);
+                    },
+                    icon: const Icon(
+                      //IconlyBroken.delete,
+                      //color: color,
+                      CupertinoIcons
+                          .delete_simple, //CupertinoIcons.cart_badge_minus
+                      color: Colors.red,
+                      size: 24,
+                    ),
+                  ),
+                ]),
+            body: Column(
+              children: [
+                _checkout(ctx: context),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (ctx, index) {
+                      return const CartWidget();
+                    },
+                  ),
+                ),
+              ],
             ),
-          ]),
-      body: Column(
-        children: [
-          _checkout(ctx: context),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (ctx, index) {
-                return const CartWidget();
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+          );
   }
 
   Widget _checkout({required BuildContext ctx}) {

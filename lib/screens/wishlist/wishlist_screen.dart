@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery_app/services/global_methods.dart';
 import 'package:grocery_app/services/utils.dart';
 import 'package:grocery_app/widgets/back_widget.dart';
+import 'package:grocery_app/widgets/empty_screen.dart';
 //import 'package:grocery_app/screens/cart/cart_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -18,45 +19,56 @@ class WishlistScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     //Size size = Utils(context).getScreenSize;
-    return Scaffold(
-        appBar: AppBar(
-            centerTitle: true,
-            leading: const BackWidget(),
-            automaticallyImplyLeading: false,
-            elevation: 0,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            title: TextWidget(
-              text: 'Wishlist (2)',
-              color: color,
-              isTitle: true,
-              textSize: 22,
-            ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  GlobalMethods.warningDialog(
-                      title: 'Empty your wishlist',
-                      subtitle: 'Are you sure?',
-                      fct: () {},
-                      context: context);
-                },
-                icon: const Icon(
-                  //IconlyBroken.delete,
-                  //color: color,
-                  CupertinoIcons
-                      .delete_simple, //CupertinoIcons.cart_badge_minus
-                  color: Colors.red,
-                  size: 24,
+    // ignore: no_leading_underscores_for_local_identifiers
+    bool _isEmpty = false;
+    return _isEmpty
+        // ignore: dead_code
+        ? const EmptyScreen(
+            title: 'Your Wishlist Is Empty',
+            subtitle: 'Explore more and shortlist some items',
+            imagePath: 'assets/images/wishlist.png',
+            buttonText: 'Add a wish',
+          )
+        // ignore: dead_code
+        : Scaffold(
+            appBar: AppBar(
+                centerTitle: true,
+                leading: const BackWidget(),
+                automaticallyImplyLeading: false,
+                elevation: 0,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                title: TextWidget(
+                  text: 'Wishlist (2)',
+                  color: color,
+                  isTitle: true,
+                  textSize: 22,
                 ),
-              ),
-            ]),
-        body: MasonryGridView.count(
-          crossAxisCount: 2,
-          // mainAxisSpacing: 16,
-          // crossAxisSpacing: 20,
-          itemBuilder: (context, index) {
-            return const WishlistWidget();
-          },
-        ));
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      GlobalMethods.warningDialog(
+                          title: 'Empty your wishlist',
+                          subtitle: 'Are you sure?',
+                          fct: () {},
+                          context: context);
+                    },
+                    icon: const Icon(
+                      //IconlyBroken.delete,
+                      //color: color,
+                      CupertinoIcons
+                          .delete_simple, //CupertinoIcons.cart_badge_minus
+                      color: Colors.red,
+                      size: 24,
+                    ),
+                  ),
+                ]),
+            body: MasonryGridView.count(
+              crossAxisCount: 2,
+              // mainAxisSpacing: 16,
+              // crossAxisSpacing: 20,
+              itemBuilder: (context, index) {
+                return const WishlistWidget();
+              },
+            ));
   }
 }

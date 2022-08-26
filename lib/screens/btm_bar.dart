@@ -15,7 +15,7 @@ class BottomBarScreen extends StatefulWidget {
 }
 
 class _BottomBarScreenState extends State<BottomBarScreen> {
-  int _selectedIndex = 3;
+  int _selectedIndex = 2;
 /*
    //Solo se puede mostrar la misma AppBar en cada screen
    final List _pages = [
