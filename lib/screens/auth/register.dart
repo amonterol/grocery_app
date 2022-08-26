@@ -3,7 +3,9 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/screens/auth/forget_pass.dart';
 import 'package:grocery_app/screens/auth/login.dart';
+import 'package:grocery_app/services/global_methods.dart';
 
 import '../../consts/contss.dart';
 import '../../services/utils.dart';
@@ -269,8 +271,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {
-                      // GlobalMethods.navigateTo(
-                      //     ctx: context, routeName: FeedsScreen.routeName);
+                      GlobalMethods.navigateTo(
+                          ctx: context,
+                          routeName: ForgetPasswordScreen.routeName);
                     },
                     child: const Text(
                       'Forget password?',
