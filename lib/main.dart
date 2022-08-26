@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:grocery_app/consts/theme_data.dart';
 import 'package:grocery_app/inner_screens/product_details.dart';
 import 'package:grocery_app/providers/dark_theme_provider.dart';
-import 'package:grocery_app/screens/btm_bar.dart';
+import 'package:grocery_app/screens/auth/login.dart';
+//import 'package:grocery_app/screens/btm_bar.dart';
 import 'package:grocery_app/screens/orders/orders_screen.dart';
 import 'package:grocery_app/screens/viewed_recently/viewed_recently.dart';
 import 'package:grocery_app/screens/wishlist/wishlist_screen.dart';
@@ -47,7 +48,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: Styles.themeData(themeProvider.getDarkTheme, context),
-          home: const BottomBarScreen(),
+          home: const LoginScreen(),
           routes: {
             //OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),
             //FeedsScreen.routeName: (ctx) => const FeedsScreen(),

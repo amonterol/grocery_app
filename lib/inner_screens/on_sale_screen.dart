@@ -1,4 +1,3 @@
-/*
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/widgets/on_sale_widget.dart';
@@ -11,7 +10,8 @@ class OnSaleScreen extends StatelessWidget {
   const OnSaleScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    bool _isEmpty;
+    // ignore: no_leading_underscores_for_local_identifiers
+    bool _isEmpty = true;
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
     return Scaffold(
@@ -35,7 +35,8 @@ class OnSaleScreen extends StatelessWidget {
           isTitle: true,
         ),
       ),
-      body: _isEmpty ? Center(
+      body: _isEmpty
+          ? Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -58,6 +59,7 @@ class OnSaleScreen extends StatelessWidget {
                 ),
               ),
             )
+          // ignore: dead_code
           : GridView.count(
               crossAxisCount: 2,
               padding: EdgeInsets.zero,
@@ -70,4 +72,3 @@ class OnSaleScreen extends StatelessWidget {
     );
   }
 }
-*/
