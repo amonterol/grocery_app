@@ -143,9 +143,15 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisCount: 2,
               padding: EdgeInsets.zero,
               // crossAxisSpacing: 10,
-              childAspectRatio: size.width / (size.height * 0.59),
-              children: List.generate(4, (index) {
-                return const FeedsWidget();
+              childAspectRatio: size.width / (size.height * 0.65),
+              children: List.generate(
+                  Constss.productsList.length < 4
+                      ? Constss.productsList.length // length 3
+                      : 4, (index) {
+                return FeedsWidget(
+                  imageUrl: Constss.productsList[index].imageUrl,
+                  title: Constss.productsList[index].title,
+                );
               }),
             )
           ],
