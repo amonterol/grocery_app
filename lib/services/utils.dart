@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/provider/dark_theme_provider.dart';
 //import 'package:grocery_app/providers/products_provider.dart';
 import 'package:provider/provider.dart';
-
-import '../providers/dark_theme_provider.dart';
 
 class Utils {
   BuildContext context;
