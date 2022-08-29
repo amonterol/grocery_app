@@ -152,9 +152,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   allProducts.length < 4
                       ? Constss.productsList.length // length 3
                       : 4, (index) {
-                return FeedsWidget(
-                  imageUrl: allProducts[index].imageUrl,
-                  title: allProducts[index].title,
+                return ChangeNotifierProvider.value(
+                  value: allProducts[index],
+                  child: const FeedsWidget(),
                 );
               }),
             )
