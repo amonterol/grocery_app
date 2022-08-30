@@ -3,9 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/providers/products_provider.dart';
 import 'package:grocery_app/services/utils.dart';
 import 'package:grocery_app/widgets/heart_btn.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
   static const routeName = '/ProductDetails';
@@ -32,6 +34,15 @@ class _ProductDetailsState extends State<ProductDetails> {
     Size size = Utils(context).getScreenSize;
     final Color color = Utils(context).color;
 
+    final productProviders = Provider.of<ProductsProvider>(context);
+    final productId = ModalRoute.of(context)!.settings.arguments as String;
+    final getCurrProduct = productProviders.findProdById(productId);
+
+    double usedPrice = getCurrProduct.isOnSale
+        ? getCurrProduct.salePrice
+        : getCurrProduct.price;
+    double totalPrice = usedPrice * int.parse(_quantityTextController.text);
+
     return Scaffold(
       appBar: AppBar(
           leading: InkWell(
@@ -50,7 +61,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         Flexible(
           flex: 2,
           child: FancyShimmerImage(
-            imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
+            imageUrl: getCurrProduct.imageUrl,
             boxFit: BoxFit.scaleDown,
             width: size.width,
             // height: screenHeight * .4,
@@ -77,7 +88,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: [
                       Flexible(
                         child: TextWidget(
-                          text: 'title',
+                          text: getCurrProduct.title,
                           color: color,
                           textSize: 25,
                           isTitle: true,
@@ -94,13 +105,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       TextWidget(
-                        text: '\$2.59',
+                        text: '\$${usedPrice.toStringAsFixed(2)}',
                         color: Colors.green,
                         textSize: 22,
                         isTitle: true,
                       ),
                       TextWidget(
-                        text: '/Kg',
+                        text: getCurrProduct.isPiece ? '/Piece' : '/Kg',
                         color: color,
                         textSize: 16,
                         isTitle: false,
@@ -109,9 +120,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                         width: 10,
                       ),
                       Visibility(
-                        visible: true,
+                        visible: getCurrProduct.isOnSale ? true : false,
                         child: Text(
-                          '\$3.9',
+                          '\$${getCurrProduct.price.toStringAsFixed(2)}',
                           style: TextStyle(
                               fontSize: 15,
                               color: color,
@@ -232,13 +243,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                               child: Row(
                                 children: [
                                   TextWidget(
-                                    text: '\$2.59/',
+                                    text: '\$${totalPrice.toStringAsFixed(2)}/',
                                     color: color,
                                     textSize: 20,
                                     isTitle: true,
                                   ),
                                   TextWidget(
-                                    text: '${_quantityTextController.text}Kg',
+                                    text:
+                                        '${_quantityTextController.text}${getCurrProduct.isPiece ? 'Piece' : 'Kg'}',
                                     color: color,
                                     textSize: 20,
                                     isTitle: false,

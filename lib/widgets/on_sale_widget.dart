@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 //import '../inner_screens/on_sale_screen.dart';
 import '../inner_screens/product_details.dart';
-import '../services/global_methods.dart';
+//import '../services/global_methods.dart';
 import 'price_widget.dart';
 
 class OnSaleWidget extends StatefulWidget {
@@ -34,8 +34,10 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: () {
-            GlobalMethods.navigateTo(
-                ctx: context, routeName: ProductDetails.routeName);
+            Navigator.pushNamed(context, ProductDetails.routeName,
+                arguments: productModel.id);
+            // GlobalMethods.navigateTo(
+            //     ctx: context, routeName: ProductDetails.routeName);
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
