@@ -2,9 +2,13 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/inner_screens/product_details.dart';
+//import 'package:grocery_app/models/wishlist_model.dart';
+//import 'package:grocery_app/providers/products_provider.dart';
+//import 'package:grocery_app/providers/wishlist_provider.dart';
 import 'package:grocery_app/services/global_methods.dart';
-import 'package:grocery_app/widgets/heart_btn.dart';
+//import 'package:grocery_app/widgets/heart_btn.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
+//import 'package:provider/provider.dart';
 
 import '../../services/utils.dart';
 
@@ -15,6 +19,20 @@ class WishlistWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
+    /*
+    final productProvider = Provider.of<ProductsProvider>(context);
+    final wishlistModel = Provider.of<WishlistModel>(context);
+    
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    final getCurrProduct =
+        productProvider.findProdById(wishlistModel.productId);
+    double usedPrice = getCurrProduct.isOnSale
+        ? getCurrProduct.salePrice
+        : getCurrProduct.price;
+    
+    bool? isInWishlist =
+        wishlistProvider.getWishlistItems.containsKey(getCurrProduct.id);
+    */
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: GestureDetector(
@@ -52,7 +70,12 @@ class WishlistWidget extends StatelessWidget {
                             color: color,
                           ),
                         ),
-                        const HeartBTN(),
+                        /*
+                        HeartBTN(
+                          productId: getCurrProduct.id,
+                          isInWishlist: isInWishlist,
+                        )
+                       , */
                       ],
                     ),
                   ),

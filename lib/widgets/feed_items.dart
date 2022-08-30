@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:grocery_app/inner_screens/product_details.dart';
 import 'package:grocery_app/models/products_model.dart';
 import 'package:grocery_app/providers/cart_provider.dart';
+import 'package:grocery_app/providers/wishlist_provider.dart';
 //import 'package:grocery_app/services/global_methods.dart';
 import 'package:grocery_app/widgets/price_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
@@ -37,12 +38,14 @@ class _FeedsWidgetState extends State<FeedsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final productModel = Provider.of<ProductModel>(context);
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
+    final productModel = Provider.of<ProductModel>(context);
     final cartProvider = Provider.of<CartProvider>(context);
     bool? isInCart = cartProvider.getCartItems.containsKey(productModel.id);
-
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool? isInWishlist =
+        wishlistProvider.getWishlistItems.containsKey(productModel.id);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -78,9 +81,12 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                       isTitle: true,
                     ),
                   ),
-                  const Flexible(
+                  Flexible(
                     flex: 1,
-                    child: HeartBTN(),
+                    child: HeartBTN(
+                      productId: productModel.id,
+                      isInWishlist: isInWishlist,
+                    ),
                   )
                 ],
               ),

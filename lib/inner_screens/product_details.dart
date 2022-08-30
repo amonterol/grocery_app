@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/providers/products_provider.dart';
+import 'package:grocery_app/providers/wishlist_provider.dart';
 import 'package:grocery_app/services/utils.dart';
 import 'package:grocery_app/widgets/heart_btn.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
@@ -37,6 +38,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     final productProviders = Provider.of<ProductsProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     final getCurrProduct = productProviders.findProdById(productId);
 
@@ -47,6 +49,8 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     bool? isInCart = cartProvider.getCartItems.containsKey(getCurrProduct.id);
 
+    bool? isInWishlist =
+        wishlistProvider.getWishlistItems.containsKey(getCurrProduct.id);
     return Scaffold(
       appBar: AppBar(
           leading: InkWell(
@@ -98,7 +102,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                           isTitle: true,
                         ),
                       ),
-                      const HeartBTN(),
+                      HeartBTN(
+                        productId: getCurrProduct.id,
+                        isInWishlist: isInWishlist,
+                      ),
                     ],
                   ),
                 ),
