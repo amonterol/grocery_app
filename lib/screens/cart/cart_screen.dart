@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:grocery_app/providers/cart_provider.dart';
 //import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/screens/cart/cart_widget.dart';
 import 'package:grocery_app/services/global_methods.dart';
 import 'package:grocery_app/services/utils.dart';
 import 'package:grocery_app/widgets/empty_screen.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
+import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -14,23 +16,22 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     //Size size = Utils(context).getScreenSize;
-    // ignore: no_leading_underscores_for_local_identifiers
-    bool _isEmpty = true;
-
-    return _isEmpty
+    final cartProvider = Provider.of<CartProvider>(context);
+    final cartItemsList =
+        cartProvider.getCartItems.values.toList().reversed.toList();
+    return cartItemsList.isEmpty
         ? const EmptyScreen(
             title: 'Your cart is empty',
             subtitle: 'Add something and make me happy :)',
             buttonText: 'Shop now',
             imagePath: 'assets/images/cart.png',
           )
-        // ignore: dead_code
         : Scaffold(
             appBar: AppBar(
                 elevation: 0,
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 title: TextWidget(
-                  text: 'Cart (10)',
+                  text: 'Cart (${cartItemsList.length})',
                   color: color,
                   isTitle: true,
                   textSize: 22,
@@ -59,7 +60,7 @@ class CartScreen extends StatelessWidget {
                 _checkout(ctx: context),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: 10,
+                    itemCount: cartItemsList.length,
                     itemBuilder: (ctx, index) {
                       return const CartWidget();
                     },
