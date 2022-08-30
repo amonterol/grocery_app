@@ -8,6 +8,7 @@ import 'package:grocery_app/services/utils.dart';
 import 'package:grocery_app/widgets/heart_btn.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:grocery_app/providers/cart_provider.dart';
 
 class ProductDetails extends StatefulWidget {
   static const routeName = '/ProductDetails';
@@ -35,6 +36,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     final Color color = Utils(context).color;
 
     final productProviders = Provider.of<ProductsProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     final getCurrProduct = productProviders.findProdById(productId);
 
@@ -269,7 +271,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                           color: Colors.green,
                           borderRadius: BorderRadius.circular(10),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              cartProvider.addProductsToCart(
+                                  productId: getCurrProduct.id,
+                                  quantity:
+                                      int.parse(_quantityTextController.text));
+                            },
                             borderRadius: BorderRadius.circular(10),
                             child: Padding(
                                 padding: const EdgeInsets.all(12.0),
