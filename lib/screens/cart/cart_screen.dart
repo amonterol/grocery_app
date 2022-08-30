@@ -42,7 +42,9 @@ class CartScreen extends StatelessWidget {
                       GlobalMethods.warningDialog(
                           title: 'Empty your cart',
                           subtitle: 'Are you sure?',
-                          fct: () {},
+                          fct: () {
+                            cartProvider.clearCart();
+                          },
                           context: context);
                     },
                     icon: const Icon(

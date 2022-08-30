@@ -94,6 +94,8 @@ class _CartWidgetState extends State<CartWidget> {
                                   if (_quantityTextController.text == '1') {
                                     return;
                                   } else {
+                                    cartProvider.reduceQuantityByOne(
+                                        cartModel.productId);
                                     setState(() {
                                       _quantityTextController.text = (int.parse(
                                                   _quantityTextController
@@ -125,7 +127,7 @@ class _CartWidgetState extends State<CartWidget> {
                                   onChanged: (value) {
                                     setState(() {
                                       if (value.isEmpty) {
-                                        _quantityTextController.text = '1';
+                                        _quantityTextController.text = '0';
                                       } else {
                                         return;
                                       }
@@ -135,6 +137,8 @@ class _CartWidgetState extends State<CartWidget> {
                               ),
                               _quantityController(
                                 fct: () {
+                                  cartProvider.increaseQuantityByOne(
+                                      cartModel.productId);
                                   setState(() {
                                     _quantityTextController.text = (int.parse(
                                                 _quantityTextController.text) +
@@ -158,7 +162,9 @@ class _CartWidgetState extends State<CartWidget> {
                       child: Column(
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              cartProvider.removeOneItem(cartModel.productId);
+                            },
                             child: const Icon(
                               CupertinoIcons
                                   .delete_simple, //CupertinoIcons.cart_badge_minus
