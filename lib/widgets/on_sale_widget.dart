@@ -24,8 +24,8 @@ class OnSaleWidget extends StatefulWidget {
 class _OnSaleWidgetState extends State<OnSaleWidget> {
   @override
   Widget build(BuildContext context) {
-    final productModel = Provider.of<ProductModel>(context);
     final Color color = Utils(context).color;
+    final productModel = Provider.of<ProductModel>(context);
     //final theme = Utils(context).getTheme;
     Size size = Utils(context).getScreenSize;
     final cartProvider = Provider.of<CartProvider>(context);
@@ -33,6 +33,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
     final wishlistProvider = Provider.of<WishlistProvider>(context);
     bool? isInWishlist =
         wishlistProvider.getWishlistItems.containsKey(productModel.id);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -63,7 +64,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                       Column(
                         children: [
                           TextWidget(
-                            text: productModel.isPiece ? '1 Piece' : '1 Kg',
+                            text: productModel.isPiece ? '1Piece' : '1KG',
                             color: color,
                             textSize: 22,
                             isTitle: true,
@@ -74,10 +75,13 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                           Row(
                             children: [
                               GestureDetector(
-                                onTap: () {
-                                  cartProvider.addProductsToCart(
-                                      productId: productModel.id, quantity: 1);
-                                },
+                                onTap: isInCart
+                                    ? null
+                                    : () {
+                                        cartProvider.addProductsToCart(
+                                            productId: productModel.id,
+                                            quantity: 1);
+                                      },
                                 child: Icon(
                                   isInCart ? IconlyBold.bag2 : IconlyLight.bag2,
                                   size: 22,
@@ -87,7 +91,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                               HeartBTN(
                                 productId: productModel.id,
                                 isInWishlist: isInWishlist,
-                              ),
+                              )
                             ],
                           ),
                         ],
