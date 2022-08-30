@@ -22,7 +22,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   //Para poder mostrar diferenes AppBar en cada screen
   final List<Map<String, dynamic>> _pages = [
     {'page': const HomeScreen(), 'title': 'Home Screen'},
-    {'page': const CategoriesScreen(), 'title': 'Categories Screen'},
+    {'page': CategoriesScreen(), 'title': 'Categories Screen'},
     {'page': const CartScreen(), 'title': 'Cart Screen'},
     {'page': const UserScreen(), 'title': 'User Screen'},
   ];
