@@ -41,6 +41,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
     final cartProvider = Provider.of<CartProvider>(context);
+    bool? isInCart = cartProvider.getCartItems.containsKey(productModel.id);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -147,25 +148,28 @@ class _FeedsWidgetState extends State<FeedsWidget> {
             SizedBox(
               width: double.infinity,
               child: TextButton(
-                onPressed: () {
-                  cartProvider.addProductsToCart(
-                      productId: productModel.id,
-                      quantity: int.parse(_quantityTextController.text));
-                },
                 style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Theme.of(context).cardColor),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(12.0),
-                          bottomRight: Radius.circular(12.0),
-                        ),
+                  backgroundColor:
+                      MaterialStateProperty.all(Theme.of(context).cardColor),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(12.0),
+                        bottomRight: Radius.circular(12.0),
                       ),
-                    )),
+                    ),
+                  ),
+                ),
+                onPressed: isInCart
+                    ? null
+                    : () {
+                        cartProvider.addProductsToCart(
+                            productId: productModel.id,
+                            quantity: int.parse(_quantityTextController.text));
+                      },
                 child: TextWidget(
-                  text: 'Add to cart',
+                  text: isInCart ? 'In cart' : 'Add to cart',
                   maxLines: 1,
                   color: color,
                   textSize: 20,
