@@ -72,7 +72,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
-                    flex: 3,
+                    flex: 1,
                     child: TextWidget(
                       text: productModel.title,
                       color: color,

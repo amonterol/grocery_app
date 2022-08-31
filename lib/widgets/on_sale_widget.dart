@@ -111,7 +111,6 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                     textSize: 16,
                     isTitle: true,
                   ),
-                  const SizedBox(height: 5),
                 ]),
           ),
         ),
