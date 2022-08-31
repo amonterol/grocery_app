@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/provider/dark_theme_provider.dart';
+import 'package:grocery_app/providers/cart_provider.dart';
 import 'package:grocery_app/screens/cart/cart_screen.dart';
 import 'package:grocery_app/screens/categories.dart';
 import 'package:grocery_app/screens/home_screen.dart';
@@ -69,17 +70,24 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             label: "Categories",
           ),
           BottomNavigationBarItem(
-            icon: Badge(
-                toAnimate: true,
-                shape: BadgeShape.circle,
-                badgeColor: Colors.blue,
-                borderRadius: BorderRadius.circular(8),
-                position: BadgePosition.topEnd(top: -14, end: -10),
-                badgeContent: FittedBox(
-                    child: TextWidget(
-                        text: '1', color: Colors.white, textSize: 14)),
-                child: Icon(
-                    _selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy)),
+            icon: Consumer<CartProvider>(
+              builder: (_, myCart, ch) {
+                return Badge(
+                  toAnimate: true,
+                  shape: BadgeShape.circle,
+                  badgeColor: Colors.blue,
+                  borderRadius: BorderRadius.circular(8),
+                  position: BadgePosition.topEnd(top: -14, end: -10),
+                  badgeContent: FittedBox(
+                      child: TextWidget(
+                          text: myCart.getCartItems.length.toString(),
+                          color: Colors.white,
+                          textSize: 14)),
+                  child: Icon(
+                      _selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy),
+                );
+              },
+            ),
             label: "Cart",
           ),
           BottomNavigationBarItem(
