@@ -1,4 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:firebase_core/firebase_core.dart';
 //import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/gestures.dart';
@@ -45,9 +46,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
+  bool isLoading = false;
   void _submitFormOnRegister() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
+    setState(() {
+      isLoading = false;
+    });
     if (isValid) {
       _formKey.currentState!.save();
       try {
@@ -56,8 +61,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
             password: _passTextController.text.trim());
         // ignore: avoid_print
         print('Succefully registered');
+      } on FirebaseException catch (error) {
+        GlobalMethods.errorDialog(
+            subtitle: '${error.message}', context: context);
+        setState(() {
+          isLoading = false;
+        });
       } catch (error) {
         GlobalMethods.errorDialog(subtitle: '$error', context: context);
+        setState(() {
+          isLoading = false;
+        });
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
       }
     }
   }
@@ -297,12 +315,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 ),
-                AuthButton(
-                  buttonText: 'Sign up',
-                  fct: () {
-                    _submitFormOnRegister();
-                  },
-                ),
+                isLoading
+                    ? const CircularProgressIndicator()
+                    : AuthButton(
+                        buttonText: 'Sign up',
+                        fct: () {
+                          _submitFormOnRegister();
+                        },
+                      ),
                 const SizedBox(
                   height: 10,
                 ),
