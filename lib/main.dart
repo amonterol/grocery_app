@@ -33,21 +33,6 @@ void main() async {
   runApp(const MyApp());
 }
 
-/*
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    // Replace with actual values
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyAo29vNQm1_8m812hGtHhxSI_DPu-Y8pG0",
-      appId: "1:436859752497:android:032f8e8ac23bd3e80f4510",
-      messagingSenderId: "messaging id",
-      projectId: "grocery-flutter-course-d7163",
-    ),
-  );
-  runApp(const MyApp());
-}
-*/
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
