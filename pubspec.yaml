@@ -41,6 +41,7 @@ dependencies:
   badges: ^2.0.3
   card_swiper: ^2.0.4
   firebase_core: ^1.21.1
+  firebase_auth: ^3.7.0
 
 dev_dependencies:
   flutter_test:

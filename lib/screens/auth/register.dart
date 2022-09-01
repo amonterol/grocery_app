@@ -1,8 +1,10 @@
 import 'package:card_swiper/card_swiper.dart';
+//import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/consts/firebase_consts.dart';
 import 'package:grocery_app/screens/auth/forget_pass.dart';
 import 'package:grocery_app/screens/auth/login.dart';
 import 'package:grocery_app/services/global_methods.dart';
@@ -48,6 +50,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
+      try {
+        await authInstance.createUserWithEmailAndPassword(
+            email: _emailTextController.text.toLowerCase().trim(),
+            password: _passTextController.text.trim());
+        // ignore: avoid_print
+        print('Succefully registered');
+      } catch (error) {
+        GlobalMethods.errorDialog(subtitle: '$error', context: context);
+      }
     }
   }
 

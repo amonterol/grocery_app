@@ -37,6 +37,13 @@
             {
               "client_id": "436859752497-sl21fh4b016k6v4a6kdbrr04go8nfhmc.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "436859752497-qire28nrsvlv2h7n98isur5l7eeqodmk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.groceryApp"
+              }
             }
           ]
         }

@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/consts/theme_data.dart';
+import 'package:grocery_app/firebase_options.dart';
+
 import 'package:grocery_app/inner_screens/cat_screen.dart';
 import 'package:grocery_app/inner_screens/feeds_screen.dart';
 import 'package:grocery_app/inner_screens/on_sale_screen.dart';
@@ -13,16 +15,39 @@ import 'package:grocery_app/providers/wishlist_provider.dart';
 import 'package:grocery_app/screens/auth/forget_pass.dart';
 import 'package:grocery_app/screens/auth/login.dart';
 import 'package:grocery_app/screens/auth/register.dart';
-import 'package:grocery_app/screens/btm_bar.dart';
-//import 'package:grocery_app/screens/btm_bar.dart';
+
 import 'package:grocery_app/screens/orders/orders_screen.dart';
 import 'package:grocery_app/screens/viewed_recently/viewed_recently.dart';
 import 'package:grocery_app/screens/wishlist/wishlist_screen.dart';
 import 'package:provider/provider.dart';
+//import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+    //options: DefaultFirebaseOptions.android, // if you're using windows emulator
+    //options: DefaultFirebaseOptions.ios, // if you're using windows emulator
+    //options: DefaultFirebaseOptions.web,
+  );
   runApp(const MyApp());
 }
+
+/*
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    // Replace with actual values
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyAo29vNQm1_8m812hGtHhxSI_DPu-Y8pG0",
+      appId: "1:436859752497:android:032f8e8ac23bd3e80f4510",
+      messagingSenderId: "messaging id",
+      projectId: "grocery-flutter-course-d7163",
+    ),
+  );
+  runApp(const MyApp());
+}
+*/
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -91,7 +116,7 @@ class _MyAppState extends State<MyApp> {
                   debugShowCheckedModeBanner: false,
                   title: 'Flutter Demo',
                   theme: Styles.themeData(themeProvider.getDarkTheme, context),
-                  home: const BottomBarScreen(),
+                  home: const LoginScreen(),
                   routes: {
                     OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),
                     FeedsScreen.routeName: (ctx) => const FeedsScreen(),
