@@ -1,4 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 //import 'package:firebase_core/firebase_core.dart';
 
@@ -8,6 +9,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/consts/firebase_consts.dart';
 import 'package:grocery_app/screens/auth/forget_pass.dart';
 import 'package:grocery_app/screens/auth/login.dart';
+import 'package:grocery_app/screens/btm_bar.dart';
 import 'package:grocery_app/screens/loading_manager.dart';
 import 'package:grocery_app/services/global_methods.dart';
 
@@ -60,6 +62,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
         await authInstance.createUserWithEmailAndPassword(
             email: _emailTextController.text.toLowerCase().trim(),
             password: _passTextController.text.trim());
+
+        if (!mounted) {
+          return;
+        }
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const BottomBarScreen()));
+        /*
+        final User? user = authInstance.currentUser;
+        //
+        if (user == null) {
+          return;
+        }
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const BottomBarScreen()));
+        */
         // ignore: avoid_print
         print('Succefully registered');
       } on FirebaseException catch (error) {

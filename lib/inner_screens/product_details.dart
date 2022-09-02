@@ -1,11 +1,14 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_app/consts/firebase_consts.dart';
 import 'package:grocery_app/providers/products_provider.dart';
 import 'package:grocery_app/providers/viewed_prod_provider.dart';
 import 'package:grocery_app/providers/wishlist_provider.dart';
+import 'package:grocery_app/services/global_methods.dart';
 import 'package:grocery_app/services/utils.dart';
 import 'package:grocery_app/widgets/heart_btn.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
@@ -290,9 +293,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                               onTap: isInCart
                                   ? null
                                   : () {
-                                      // if (_isInCart) {
-                                      //   return;
-                                      // }
+                                      final User? user =
+                                          authInstance.currentUser;
+                                      if (user == null) {
+                                        GlobalMethods.errorDialog(
+                                            subtitle:
+                                                'No user found, Please login first',
+                                            context: context);
+                                        return;
+                                      }
                                       cartProvider.addProductsToCart(
                                           productId: getCurrProduct.id,
                                           quantity: int.parse(
