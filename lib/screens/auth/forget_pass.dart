@@ -7,6 +7,7 @@ import 'package:grocery_app/services/global_methods.dart';
 //import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/services/utils.dart';
 import 'package:grocery_app/widgets/back_widget.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../consts/contss.dart';
 import '../../widgets/auth_button.dart';
@@ -44,6 +45,15 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       try {
         await authInstance.sendPasswordResetEmail(
             email: _emailTextController.text.toLowerCase());
+        Fluttertoast.showToast(
+          msg: "An email has been sent to your email address",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey.shade600,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       } on FirebaseException catch (error) {
         GlobalMethods.errorDialog(
             subtitle: '${error.message}', context: context);
