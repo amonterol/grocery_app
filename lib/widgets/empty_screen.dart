@@ -65,7 +65,7 @@ class EmptyScreen extends StatelessWidget {
                       color: color,
                     ),
                   ),
-                  primary: Theme.of(context).colorScheme.secondary,
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
                   // onPrimary: color,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 20),

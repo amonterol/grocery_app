@@ -1,7 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-//import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -63,22 +62,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
             email: _emailTextController.text.toLowerCase().trim(),
             password: _passTextController.text.trim());
 
-        if (!mounted) {
-          return;
-        }
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const BottomBarScreen()));
-        /*
         final User? user = authInstance.currentUser;
-        //
-        if (user == null) {
-          return;
-        }
+
+        final uid = user!.uid;
+        await FirebaseFirestore.instance.collection('users').doc(uid).set({
+          'id': uid,
+          'name': _fullNameController.text,
+          'email': _emailTextController.text.toLowerCase(),
+          'shipping-address': _addressTextController.text,
+          'userWish': [],
+          'userCart': [],
+          'createdAt': Timestamp.now(),
+        });
+
+        // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const BottomBarScreen()));
-        */
-        // ignore: avoid_print
-        print('Succefully registered');
       } on FirebaseException catch (error) {
         GlobalMethods.errorDialog(
             subtitle: '${error.message}', context: context);
