@@ -258,7 +258,26 @@ class _UserScreenState extends State<UserScreen> {
             ),
             actions: [
               TextButton(
-                onPressed: () {},
+                onPressed: () async {
+                  String uid = user!.uid;
+                  try {
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(uid)
+                        .update({
+                      'shipping-address': _addressTextController.text,
+                    });
+
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
+                    setState(() {
+                      address = _addressTextController.text;
+                    });
+                  } catch (err) {
+                    GlobalMethods.errorDialog(
+                        subtitle: err.toString(), context: context);
+                  }
+                },
                 child: const Text('Update'),
               ),
             ],
