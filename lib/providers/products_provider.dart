@@ -1,13 +1,40 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:grocery_app/models/products_model.dart';
 
 class ProductsProvider with ChangeNotifier {
+  static final List<ProductModel> _productsList = [];
   List<ProductModel> get getProducts {
     return _productsList;
   }
 
   List<ProductModel> get getOnSaleProducts {
     return _productsList.where((element) => element.isOnSale).toList();
+  }
+
+  Future<void> fetchProducts() async {
+    await FirebaseFirestore.instance
+        .collection('products')
+        .get()
+        .then((QuerySnapshot productSnapshot) {
+      for (var element in productSnapshot.docs) {
+        _productsList.insert(
+            0,
+            ProductModel(
+              id: element.get('id'),
+              title: element.get('title'),
+              imageUrl: element.get('imageUrl'),
+              productCategoryName: element.get('productCategoryName'),
+              price: double.parse(
+                element.get('price'),
+              ),
+              salePrice: element.get('salePrice'),
+              isOnSale: element.get('isOnSale'),
+              isPiece: element.get('isPiece'),
+            ));
+      }
+    });
+    notifyListeners();
   }
 
   ProductModel findProdById(String productId) {
@@ -23,6 +50,7 @@ class ProductsProvider with ChangeNotifier {
     return categoryList;
   }
 
+/*
   static final List<ProductModel> _productsList = [
     ProductModel(
       id: 'Apricot',
@@ -308,4 +336,5 @@ class ProductsProvider with ChangeNotifier {
       isPiece: false,
     ),
   ];
+  */
 }

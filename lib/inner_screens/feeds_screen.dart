@@ -28,6 +28,15 @@ class _FeedsScreenState extends State<FeedsScreen> {
     super.dispose();
   }
 
+  // @override
+  //Una forma de fetch los productos desde firebase pero falla
+  //al reiniciar la aplicacion
+  // void initState() {
+  //   final productsProvider = Provider.of<ProductsProvider>(context, listen: false);
+  //   productsProvider.fetchProducts();
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;

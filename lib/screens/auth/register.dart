@@ -6,9 +6,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/consts/firebase_consts.dart';
+import 'package:grocery_app/fetch_screen.dart';
 import 'package:grocery_app/screens/auth/forget_pass.dart';
 import 'package:grocery_app/screens/auth/login.dart';
-import 'package:grocery_app/screens/btm_bar.dart';
+//import 'package:grocery_app/screens/btm_bar.dart';
 import 'package:grocery_app/screens/loading_manager.dart';
 import 'package:grocery_app/services/global_methods.dart';
 
@@ -77,7 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
         // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const BottomBarScreen()));
+            MaterialPageRoute(builder: (context) => const FetchScreen()));
       } on FirebaseException catch (error) {
         GlobalMethods.errorDialog(
             subtitle: '${error.message}', context: context);

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/consts/firebase_consts.dart';
+import 'package:grocery_app/fetch_screen.dart';
 import 'package:grocery_app/screens/auth/forget_pass.dart';
 import 'package:grocery_app/screens/auth/register.dart';
 import 'package:grocery_app/screens/btm_bar.dart';
@@ -53,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
             password: _passTextController.text.trim());
         // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const BottomBarScreen(),
+          builder: (context) => const FetchScreen(),
         ));
       } on FirebaseException catch (error) {
         GlobalMethods.errorDialog(
