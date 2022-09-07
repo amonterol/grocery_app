@@ -6,7 +6,7 @@ import 'package:grocery_app/consts/firebase_consts.dart';
 import 'package:grocery_app/fetch_screen.dart';
 import 'package:grocery_app/screens/auth/forget_pass.dart';
 import 'package:grocery_app/screens/auth/register.dart';
-import 'package:grocery_app/screens/btm_bar.dart';
+//import 'package:grocery_app/screens/btm_bar.dart';
 import 'package:grocery_app/screens/loading_manager.dart';
 import 'package:grocery_app/services/global_methods.dart';
 
@@ -271,7 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fct: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const BottomBarScreen(),
+                          builder: (context) => const FetchScreen(),
                         ),
                       );
                     },

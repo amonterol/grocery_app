@@ -292,7 +292,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             child: InkWell(
                               onTap: isInCart
                                   ? null
-                                  : () {
+                                  : () async {
                                       final User? user =
                                           authInstance.currentUser;
                                       if (user == null) {
@@ -307,6 +307,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           quantity: int.parse(
                                               _quantityTextController.text),
                                           context: context);
+                                      await cartProvider.fetchCart();
                                       // cartProvider.addProductsToCart(
                                       //     productId: getCurrProduct.id,
                                       //     quantity: int.parse(

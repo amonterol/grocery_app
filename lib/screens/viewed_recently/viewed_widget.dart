@@ -88,7 +88,7 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
                     borderRadius: BorderRadius.circular(12),
                     onTap: isInCart
                         ? null
-                        : () {
+                        : () async {
                             final User? user = authInstance.currentUser;
                             if (user == null) {
                               GlobalMethods.errorDialog(
@@ -100,6 +100,7 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
                                 productId: getCurrProduct.id,
                                 quantity: 1,
                                 context: context);
+                            await cartProvider.fetchCart();
                             // cartProvider.addProductsToCart(
                             //   productId: getCurrProduct.id,
                             //   quantity: 1,
