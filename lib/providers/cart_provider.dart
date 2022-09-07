@@ -72,7 +72,15 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void clearCart() {
+  Future<void> clearOnlineCart() async {
+    await userCollection.doc(user!.uid).update({
+      'userCart': [],
+    });
+    _cartItems.clear();
+    notifyListeners();
+  }
+
+  void clearLocalCart() {
     _cartItems.clear();
     notifyListeners();
   }
