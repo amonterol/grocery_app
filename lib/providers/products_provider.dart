@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:grocery_app/models/products_model.dart';
 
 class ProductsProvider with ChangeNotifier {
-  static List<ProductModel> _productsList = [];
+  static final List<ProductModel> _productsList = [];
   List<ProductModel> get getProducts {
     return _productsList;
   }

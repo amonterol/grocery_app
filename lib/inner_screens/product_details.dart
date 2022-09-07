@@ -302,10 +302,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             context: context);
                                         return;
                                       }
-                                      cartProvider.addProductsToCart(
+                                      GlobalMethods.addToCart(
                                           productId: getCurrProduct.id,
                                           quantity: int.parse(
-                                              _quantityTextController.text));
+                                              _quantityTextController.text),
+                                          context: context);
+                                      // cartProvider.addProductsToCart(
+                                      //     productId: getCurrProduct.id,
+                                      //     quantity: int.parse(
+                                      //         _quantityTextController.text));
                                     },
                               borderRadius: BorderRadius.circular(10),
                               child: Padding(

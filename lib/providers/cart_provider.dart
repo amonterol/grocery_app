@@ -8,6 +8,7 @@ class CartProvider with ChangeNotifier {
     return _cartItems;
   }
 
+/*
   void addProductsToCart({
     required String productId,
     required int quantity,
@@ -22,6 +23,7 @@ class CartProvider with ChangeNotifier {
     );
     notifyListeners();
   }
+  */
 
   void reduceQuantityByOne(String productId) {
     _cartItems.update(

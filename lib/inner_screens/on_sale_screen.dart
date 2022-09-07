@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
+//import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/models/products_model.dart';
 import 'package:grocery_app/providers/products_provider.dart';
 import 'package:grocery_app/services/utils.dart';
+import 'package:grocery_app/widgets/back_widget.dart';
+import 'package:grocery_app/widgets/empty_products_widget.dart';
 import 'package:grocery_app/widgets/on_sale_widget.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
@@ -12,23 +14,13 @@ class OnSaleScreen extends StatelessWidget {
   const OnSaleScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    // ignore: no_leading_underscores_for_local_identifiers
-    final productProviders = Provider.of<ProductsProvider>(context);
-    List<ProductModel> productsOnSale = productProviders.getOnSaleProducts;
+    final productsProvider = Provider.of<ProductsProvider>(context);
+    List<ProductModel> productsOnSale = productsProvider.getOnSaleProducts;
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            IconlyLight.arrowLeft2,
-            color: color,
-          ),
-        ),
+        leading: const BackWidget(),
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: TextWidget(
@@ -39,30 +31,9 @@ class OnSaleScreen extends StatelessWidget {
         ),
       ),
       body: productsOnSale.isEmpty
-          ? Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Image.asset(
-                        'assets/images/box.png',
-                      ),
-                    ),
-                    Text(
-                      'No products on sale yet!,\nStay tuned',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: color,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ],
-                ),
-              ),
+          ? const EmptyProdWidget(
+              text: 'No products on sale yet!,\nStay tuned',
             )
-          // ignore: dead_code
           : GridView.count(
               crossAxisCount: 2,
               padding: EdgeInsets.zero,
