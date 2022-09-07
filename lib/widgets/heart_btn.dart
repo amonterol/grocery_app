@@ -9,19 +9,29 @@ import 'package:provider/provider.dart';
 
 import '../services/utils.dart';
 
-class HeartBTN extends StatelessWidget {
-  const HeartBTN({Key? key, required this.productId, this.isInWishlist})
+class HeartBTN extends StatefulWidget {
+  const HeartBTN({Key? key, required this.productId, this.isInWishlist = false})
       : super(key: key);
   final String productId;
   final bool? isInWishlist;
+
+  @override
+  State<HeartBTN> createState() => _HeartBTNState();
+}
+
+class _HeartBTNState extends State<HeartBTN> {
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductsProvider>(context);
-    final getCurrProduct = productProvider.findProdById(productId);
+    final getCurrProduct = productProvider.findProdById(widget.productId);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
     final Color color = Utils(context).color;
     return GestureDetector(
       onTap: () async {
+        setState(() {
+          loading = true;
+        });
         try {
           final User? user = authInstance.currentUser;
 
@@ -31,30 +41,42 @@ class HeartBTN extends StatelessWidget {
                 context: context);
             return;
           }
-          if (isInWishlist == false && isInWishlist != null) {
+          if (widget.isInWishlist == false && widget.isInWishlist != null) {
             await GlobalMethods.addToWishlist(
-                productId: productId, context: context);
+                productId: widget.productId, context: context);
           } else {
             await wishlistProvider.removeOneItem(
                 wishlistId:
                     wishlistProvider.getWishlistItems[getCurrProduct.id]!.id,
-                productId: productId);
+                productId: widget.productId);
           }
           await wishlistProvider.fetchWishlist();
+          setState(() {
+            loading = false;
+          });
         } catch (error) {
           GlobalMethods.errorDialog(subtitle: '$error', context: context);
-        } finally {}
-        // print('user id is ${user.uid}');
-        // wishlistProvider.addRemoveProductToWishlist(productId: productId);
+        } finally {
+          setState(() {
+            loading = false;
+          });
+        }
       },
-      child: Icon(
-        isInWishlist != null && isInWishlist == true
-            ? IconlyBold.heart
-            : IconlyLight.heart,
-        size: 22,
-        color:
-            isInWishlist != null && isInWishlist == true ? Colors.red : color,
-      ),
+      child: loading
+          ? const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: SizedBox(
+                  height: 20, width: 20, child: CircularProgressIndicator()),
+            )
+          : Icon(
+              widget.isInWishlist != null && widget.isInWishlist == true
+                  ? IconlyBold.heart
+                  : IconlyLight.heart,
+              size: 22,
+              color: widget.isInWishlist != null && widget.isInWishlist == true
+                  ? Colors.red
+                  : color,
+            ),
     );
   }
 }
