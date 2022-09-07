@@ -11,10 +11,10 @@ class CartProvider with ChangeNotifier {
     return _cartItems;
   }
 
-  final User? user = authInstance.currentUser;
   final userCollection = FirebaseFirestore.instance.collection('users');
 
   Future<void> fetchCart() async {
+    final User? user = authInstance.currentUser;
     final DocumentSnapshot userDoc = await userCollection.doc(user!.uid).get();
     // ignore: unnecessary_null_comparison
     if (userDoc == null) {
@@ -62,6 +62,7 @@ class CartProvider with ChangeNotifier {
       {required String cartId,
       required String productId,
       required int quantity}) async {
+    final User? user = authInstance.currentUser;
     await userCollection.doc(user!.uid).update({
       'userCart': FieldValue.arrayRemove([
         {'cartId': cartId, 'productId': productId, 'quantity': quantity}
@@ -73,6 +74,7 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> clearOnlineCart() async {
+    final User? user = authInstance.currentUser;
     await userCollection.doc(user!.uid).update({
       'userCart': [],
     });
