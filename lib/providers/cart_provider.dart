@@ -11,29 +11,11 @@ class CartProvider with ChangeNotifier {
     return _cartItems;
   }
 
-/*
-  void addProductsToCart({
-    required String productId,
-    required int quantity,
-  }) {
-    _cartItems.putIfAbsent(
-      productId,
-      () => CartModel(
-        id: DateTime.now().toString(),
-        productId: productId,
-        quantity: quantity,
-      ),
-    );
-    notifyListeners();
-  }
-  */
+  final User? user = authInstance.currentUser;
+  final userCollection = FirebaseFirestore.instance.collection('users');
 
   Future<void> fetchCart() async {
-    final User? user = authInstance.currentUser;
-    String uid = user!.uid;
-
-    final DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    final DocumentSnapshot userDoc = await userCollection.doc(user!.uid).get();
     // ignore: unnecessary_null_comparison
     if (userDoc == null) {
       return;
@@ -76,8 +58,17 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeOneItem(String productId) {
+  Future<void> removeOneItem(
+      {required String cartId,
+      required String productId,
+      required int quantity}) async {
+    await userCollection.doc(user!.uid).update({
+      'userCart': FieldValue.arrayRemove([
+        {'cartId': cartId, 'productId': productId, 'quantity': quantity}
+      ])
+    });
     _cartItems.remove(productId);
+    await fetchCart();
     notifyListeners();
   }
 
