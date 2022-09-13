@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery_app/consts/firebase_consts.dart';
 import 'package:grocery_app/providers/cart_provider.dart';
+import 'package:grocery_app/providers/orders_provider.dart';
 import 'package:grocery_app/providers/products_provider.dart';
 //import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_app/screens/cart/cart_widget.dart';
@@ -89,9 +90,11 @@ class CartScreen extends StatelessWidget {
     final Color color = Utils(ctx).color;
     Size size = Utils(ctx).getScreenSize;
 
-    //calculating the cart total
     final cartProvider = Provider.of<CartProvider>(ctx);
     final productProvider = Provider.of<ProductsProvider>(ctx);
+    final ordersProvider = Provider.of<OrdersProvider>(ctx);
+
+    //calculating the cart total
     double total = 0.0;
     cartProvider.getCartItems.forEach((key, value) {
       final getCurrProduct = productProvider.findProdById(value.productId);
@@ -143,7 +146,7 @@ class CartScreen extends StatelessWidget {
                     });
                     await cartProvider.clearOnlineCart();
                     cartProvider.clearLocalCart();
-                    //todo Fetch the orders here.
+                    ordersProvider.fetchOrders();
                     await Fluttertoast.showToast(
                       msg: "Your order has been placed",
                       toastLength: Toast.LENGTH_SHORT,
