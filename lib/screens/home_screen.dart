@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisCount: 2,
               padding: EdgeInsets.zero,
               // crossAxisSpacing: 10,
-              childAspectRatio: size.width / (size.height * 0.65),
+              childAspectRatio: size.width / (size.height * 0.61),
               children: List.generate(
                   allProducts.length < 4
                       ? Constss.productsList.length // length 3
