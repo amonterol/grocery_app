@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:grocery_app/consts/firebase_consts.dart';
 import 'package:grocery_app/providers/cart_provider.dart';
 import 'package:grocery_app/providers/products_provider.dart';
 //import 'package:flutter_iconly/flutter_iconly.dart';
@@ -9,6 +13,7 @@ import 'package:grocery_app/services/utils.dart';
 import 'package:grocery_app/widgets/empty_screen.dart';
 import 'package:grocery_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -108,7 +113,48 @@ class CartScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
-              onTap: () {},
+              onTap: () async {
+                User? user = authInstance.currentUser;
+                final orderId = const Uuid().v4();
+                final productProvider =
+                    Provider.of<ProductsProvider>(ctx, listen: false);
+                //Loop over cart itemas
+                cartProvider.getCartItems.forEach((key, value) async {
+                  final getCurrProduct = productProvider.findProdById(
+                    value.productId,
+                  );
+                  try {
+                    await FirebaseFirestore.instance
+                        .collection('orders')
+                        .doc(orderId)
+                        .set({
+                      'orderId': orderId,
+                      'userId': user!.uid,
+                      'productId': value.productId,
+                      'price': (getCurrProduct.isOnSale
+                              ? getCurrProduct.salePrice
+                              : getCurrProduct.price) *
+                          value.quantity,
+                      'totalPrice': total,
+                      'quantity': value.quantity,
+                      'imageUrl': getCurrProduct.imageUrl,
+                      'userName': user.displayName,
+                      'orderDate': Timestamp.now(),
+                    });
+                    await cartProvider.clearOnlineCart();
+                    cartProvider.clearLocalCart();
+                    //todo Fetch the orders here.
+                    await Fluttertoast.showToast(
+                      msg: "Your order has been placed",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                    );
+                  } catch (error) {
+                    GlobalMethods.errorDialog(
+                        subtitle: error.toString(), context: ctx);
+                  } finally {}
+                });
+              },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextWidget(
