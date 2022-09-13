@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:grocery_app/consts/firebase_consts.dart';
 import 'package:grocery_app/models/orders_model.dart';
 
 class OrdersProvider with ChangeNotifier {
@@ -8,9 +10,16 @@ class OrdersProvider with ChangeNotifier {
     return _orders;
   }
 
+  void clearLocalOrders() {
+    _orders.clear();
+    notifyListeners();
+  }
+
   Future<void> fetchOrders() async {
+    User? user = authInstance.currentUser;
     await FirebaseFirestore.instance
         .collection('orders')
+        .where("userId", isEqualTo: user!.uid)
         .get()
         .then((QuerySnapshot ordersSnapshot) {
       _orders = [];
